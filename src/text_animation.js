@@ -1,4 +1,18 @@
+const text_split = (node, returnText, span) => {
+  var nodeClass = node.className;
+  const text = node.textContent.replace(/¥?¥n/g, '');
+  const splitText = text.split('');
+  var removals = [' '];
+  var splitTexts = splitText.filter((v) => {
+    return ! removals.includes(v);
+  });
 
+  for (const char of splitTexts) {
+    span === true ? returnText += `<span class=${nodeClass}>${char}</span>` : returnText += `<span>${char}</span>`;
+  }
+
+  return returnText;
+}
 
 const change_span = (target) => {
   const nodes = [...target.childNodes];
@@ -6,29 +20,10 @@ const change_span = (target) => {
 
   for (const node of nodes) {
     if (node.nodeType == 3) {
-      const text = node.textContent.replace(/¥?¥n/g, '');
-      const splitText = text.split('');
-      var removals = [' '];
-      var splitTexts = splitText.filter((v) => {
-        return ! removals.includes(v);
-      });
-
-      for(const char of splitTexts) {
-        returnText += `<span>${char}</span>`;
-      }
+      returnText = text_split(node, returnText, false);
     } else {
       if (node.outerHTML.indexOf("span") != -1) {
-        var nodeClass = node.className;
-        const text = node.textContent.replace(/¥?¥n/g, '');
-        const splitText = text.split('');
-        var removals = [' '];
-        var splitTexts = splitText.filter((v) => {
-          return ! removals.includes(v);
-        });
-
-        for (const char of splitTexts) {
-          returnText += `<span class=${nodeClass}>${char}</span>`;
-        }
+        returnText = text_split(node, returnText, true);
       } else {
         returnText += node.outerHTML;
       }
