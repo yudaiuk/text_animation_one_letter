@@ -8,7 +8,8 @@ const text_split = (node, returnText, span) => {
   });
 
   splitTexts.forEach((char) => {
-    span === true ? returnText += `<span class=${nodeClass}>${char}</span>` : returnText += `<span>${char}</span>`;
+    span === true ? 
+    returnText += `<span class=${nodeClass}>${char}</span>` : returnText += `<span>${char}</span>`;
   });
 
   return returnText;
@@ -19,15 +20,9 @@ const change_span = (target) => {
   let returnText = '';
 
   nodes.forEach((node) => {
-    if (node.nodeType == 3) {
-      returnText = text_split(node, returnText, false);
-    } else {
-      if (node.outerHTML.indexOf('span') != -1) {
-        returnText = text_split(node, returnText, true);
-      } else {
-        returnText += node.outerHTML;
-      }
-    }
+    node.nodeType == 3 ? 
+    returnText = text_split(node, returnText, false) : node.outerHTML.indexOf('span') != -1 ? 
+    returnText = text_split(node, returnText, true) : returnText += node.outerHTML;
   });
 
   return returnText;
