@@ -1,3 +1,5 @@
-import { hello } from "./sub";
+import { text_animation } from './text_animation';
+import gsap from 'gsap';
 
-hello();
+const hoge = gsap.timeline({});
+text_animation(".hoge", hoge, 0.03);
